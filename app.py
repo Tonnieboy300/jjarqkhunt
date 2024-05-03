@@ -4,6 +4,9 @@ from pymongo import MongoClient
 from bson import json_util
 import json
 
+app = Flask(__name__)
+# tells flask to not auto-sort json. helps when viewing data during testing.
+app.json.sort_keys = False
 
 # init database connection
 client = MongoClient(open("./secrets/mongoDB", "r").read())
@@ -51,8 +54,6 @@ def getSearchResults(lat: float,long: float, minDistance: int, maxDistance: int,
 def resultsToJSON(data):
     return json.loads(json_util.dumps(data))
 
-app = Flask(__name__)
-
 @app.route('/')
 def index():
     return render_template("home.html")
@@ -89,16 +90,13 @@ def search():
         # splits string into a list seperated by commas
         tags = tags.split(",")
 
-    
-
-
     nearLocationsData = getSearchResults(lat,long,0,maxDistance,tags)
-    nearLocations = [{"resultsFound":0, "lat": lat, "long": long, "addr":geocode_result[0]["formatted_address"],"maxDist":maxDistance}]
+    nearLocations = {"resultsFound":0, "lat": lat, "long": long, "addr":geocode_result[0]["formatted_address"],"maxDist":maxDistance, "results":[]}
 
     for doc in nearLocationsData:
-        nearLocations.append(doc)
+        nearLocations["results"].append(doc)
 
-    nearLocations[0]["resultsFound"] = len(nearLocations) - 1
+    nearLocations["resultsFound"] = len(nearLocations["results"])
 
     app.logger.info(f"Request successful from {request.remote_addr}: Lat {lat}, Long {long}, Tags {tags}")
     return nearLocations
