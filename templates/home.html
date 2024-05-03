@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JJARQK Search</title>
+    </head>
+    <body>
+        <h1>Placeholder Title</h1>
+        <form id="searchForm">
+            <input type="text" value="Search" id="searchBox" required>
+            <input type="submit" value="Submit">
+        </form>
+        <script>
+            document.getElementById("searchForm").addEventListener("submit", (e) =>{
+                e.preventDefault();
+                window.location.href = "/search?addr=" + encodeURIComponent(document.getElementById("searchBox").value);
+            })
+    </script>
+    </body>
+</html>

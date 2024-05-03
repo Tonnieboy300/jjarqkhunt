@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content%}
+<h1>placeholder title</h1>
+{% if tags %}
+<h2>Locations with tags {{ tags }} within {{ maxDistance}}m of {{addr}}.</h2>
+{% else %}
+<h2>Locations within {{ maxDistance}}m of {{addr}}.</h2>
+{% endif %}
+{% for location in locations %}
+<h3>{{ location.name }}</h3>
+<p>{{ location.desc }}</p>
+<p>{{ location.address }}</p>
+<p>Tags: {{ location.tags }}</p>
+{% endfor %}
+{% endblock content%}
+
