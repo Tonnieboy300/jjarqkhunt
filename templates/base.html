@@ -2,13 +2,15 @@
 <html>
   <head>
     {% if title %}
-    <title>{{ title }} - JJARQK Search</title>
+    <title>{{ title }} - JJARQK Hunt</title>
     {% else %}
-    <title>JJARQK Search</title>
+    <title>JJARQK Hunt</title>
     {% endif %}
   </head>
   <body>
-
+    <header>
+      <a href="./"><img src="./static/jjarqkHunt_noText.svg"></a>
+    </header>
     {% block content %}{% endblock content %}
   </body>
 </html>

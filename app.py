@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from bson import json_util
 import json
 from werkzeug.security import check_password_hash, generate_password_hash
+import certifi
 
 app = Flask(__name__)
 # tells flask to not auto-sort json. helps when viewing data during testing.
@@ -13,7 +14,7 @@ app.config.from_mapping(
 )
 
 # init database connection
-client = MongoClient(open("./secrets/mongoDB", "r").read())
+client = MongoClient(open("./secrets/mongoDB", "r").read(),tlsCAFile=certifi.where())
 database = client.idp11_data
 restaurants = database.restaurants
 submissions = database.submissions
