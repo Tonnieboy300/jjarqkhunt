@@ -45,11 +45,12 @@ Tags are optional, but a 400 error will occur if addr or dist are omitted. <br>
 Results are returned in JSON. Here's an example:
 ```json
 {
-  "resultsFound": 3,
+  "resultsFound": 1,
   "lat": 53.3511781,
   "long": -6.260969,
   "addr": "O'Connell Street Upper, North City, Dublin, Ireland",
   "maxDist": 5000,
+  "tags": ["american", "burgers"]
   "results": [
     {
       "_id": {
