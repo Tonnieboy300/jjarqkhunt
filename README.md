@@ -19,7 +19,7 @@ Now install the required packages.
 ```bash
 pip install -r requirements.txt
 ```
-Before running, place a <a href="https://mapsplatform.google.com/">Google Maps Platform</a> key (named "gmaps", no file extension) and a MongoDB connection string (named "mongoDB", no file extension) in a "secrets" folder in root. <br>
+Before running, place a <a href="https://mapsplatform.google.com/">Google Maps Platform</a> key (named "gmaps", no file extension), a MongoDB connection string (named "mongoDB", no file extension), and a secret key for flask (named "secretkey", no file extension) in a "secrets" folder in root. <br>
 Now, run the script using:
 ```bash
 flask run
