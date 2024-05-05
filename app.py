@@ -1,5 +1,5 @@
 import googlemaps
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, abort, session, redirect
 from pymongo import MongoClient
 from bson import json_util
 import json
@@ -109,7 +109,7 @@ def search():
 
     nearLocations["resultsFound"] = len(nearLocations["results"])
 
-    app.logger.info(f"Request successful from {request.remote_addr}: Lat {lat}, Long {long}, Tags {tags}")
+    # app.logger.info(f"Request successful from {request.remote_addr}: Lat {lat}, Long {long}, Tags {tags}")
     return nearLocations
 
 @app.route('/data/search')
@@ -145,17 +145,17 @@ def submitPage(title="Submit a Restaurant"):
         lat = geocode_result[0]["geometry"]["location"]["lat"]
         long = geocode_result[0]["geometry"]["location"]["lng"]
 
-        app.logger.info(f"Submission recieved from {request.remote_addr}: Name: {name}, Desc: {desc}, Addr: {addr}, Tags: {tags}, Cood: {lat}, {long}")
+        # app.logger.info(f"Submission recieved from {request.remote_addr}: Name: {name}, Desc: {desc}, Addr: {addr}, Tags: {tags}, Cood: {lat}, {long}")
 
         submission = {
             "name": name,
+            "desc": desc,
             "address": addr,
             "location": {
                 "type": "Point",
                 "coordinates": [long,lat] #coordinates are in long, lat format
             },
-            "tags": tags,
-            "desc": desc
+            "tags": tags
         }
 
         submissions.insert_one(submission)
@@ -166,19 +166,56 @@ def submitPage(title="Submit a Restaurant"):
         return render_template("submit.html", title=title, submittedForm = False)
     
 @app.route("/admin/newuser", methods=["GET","POST"])
-def login():
+def newAccount():
     if request.method == "POST":
         return {"username":request.form["username"],"password":generate_password_hash(request.form["password"])}
     return render_template("createAccount.html",title="Create New User")
 
+def getUser(username:str):
+    user = auth.find_one(
+        {"username": username}
+    )
+    return user
+
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    doc = getUser(username)
+    try:
+        success = check_password_hash(doc["password"], password)
+    except TypeError:
+        # if no users are found with a username, doc = None.
+        success = False
+    return success
+
+@app.route("/admin", methods=["GET", "POST"])
+def webLogin():
+    error = None
+    if request.method == "POST":
+        attempt = login()
+        if attempt:
+            session["username"] = request.form["username"]
+            return redirect("/admin/submissions", 302)
+        else:
+            error = "Username or Password Incorrect."
+    return render_template("login.html", title="Login", error=error)
+
+        
+
 @app.route("/admin/submissions", methods=["GET","POST"])
 def webSubmissions():
+    # if no username is saved, the session is not logged in
+    try:
+        username = session["username"]
+    except KeyError:
+        return redirect("/admin",302)
     data = getSubmissions()
     results = []
     for doc in data:
         results.append(doc)
 
-    return render_template("submissions.html", locations = results)
+    return render_template("submissions.html", locations = results, username=username)
 
 @app.errorhandler(404)
 def error404(error):

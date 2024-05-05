@@ -2,6 +2,7 @@
 
 {% block content%}
 <h1>Submissions</h1>
+<p>Logged in as {{username}}</p>
 {% for location in locations %}
 <h3>{{ location.name }}</h3>
 <p>{{ location.desc }}</p>
