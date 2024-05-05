@@ -3,12 +3,36 @@
 {% block content%}
 <h1>Submissions</h1>
 <p>Logged in as {{username}}</p>
+{% if length %}
+<p>{{length}} submissions found.</p>
+{% else %}
+<p>No submissions found.</p>
+{% endif %}
 {% for location in locations %}
-<h3>{{ location.name }}</h3>
-<p>{{ location.desc }}</p>
-<p>{{ location.address }}</p>
-<p>Tags: {{ location.tags }}</p>
-<p><a href="{{ location.website }}">Website</a></p>
+<div id = "{{ location._id }}">
+    <h3>{{ location.name }}</h3>
+    <p>{{ location.desc }}</p>
+    <p>{{ location.address }}</p>
+    <p>Tags: {{ location.tags }}</p>
+    <p><a href="{{ location.website }}">Website</a></p>
+    <button onclick="submissionDecision(true,'{{ location._id }}')">Approve</button> <button onclick="submissionDecision(false,'{{ location._id }}')">Delete</button>
+</div>
 {% endfor %}
+
+<script>
+    function submissionDecision(passed, id){
+        fetch("", {
+            method: "POST",
+            body: JSON.stringify({
+                pass: passed,
+                locationId: id
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+        document.getElementById(id).style = "display:none"
+    }
+</script>
 {% endblock content%}
 

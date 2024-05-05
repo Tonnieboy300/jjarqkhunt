@@ -1,7 +1,7 @@
 import googlemaps
 from flask import Flask, render_template, request, abort, session, redirect
 from pymongo import MongoClient
-from bson import json_util
+from bson import json_util, ObjectId
 import json
 from werkzeug.security import check_password_hash, generate_password_hash
 import certifi
@@ -192,6 +192,8 @@ def login():
 @app.route("/admin", methods=["GET", "POST"])
 def webLogin():
     error = None
+    if session["username"]:
+        return redirect("/admin/submissions", 302)
     if request.method == "POST":
         attempt = login()
         if attempt:
@@ -199,6 +201,7 @@ def webLogin():
             return redirect("/admin/submissions", 302)
         else:
             error = "Username or Password Incorrect."
+        app.logger.info(f"{'Successful' if attempt else 'Failed'} login attempt by {request.form['username']}")
     return render_template("login.html", title="Login", error=error)
 
         
@@ -210,12 +213,37 @@ def webSubmissions():
         username = session["username"]
     except KeyError:
         return redirect("/admin",302)
+    
+    if request.method == "POST":
+        decision = request.json
+        try:
+            location = submissions.find_one({"_id": ObjectId(decision["locationId"])})
+        except:
+            app.logger.error(f"User {username} sent a POST with a non-existant ObjectId")
+            abort(400)
+        app.logger.info(f"{username} has {'approved' if decision['pass'] else 'deleted'} submission {decision['locationId']}, {location['name']}")
+        if decision["pass"]:
+            restaurants.insert_one({
+                "name": location["name"],
+                "desc": location["desc"],
+                "address": location["address"],
+                "location": {
+                    "type": "Point",
+                    "coordinates": [location["location"]["coordinates"][0],location["location"]["coordinates"][1]] #coordinates are in long, lat format
+                },
+                "tags": location["tags"]
+            })
+        submissions.delete_one({"_id": ObjectId(decision["locationId"])})
+
+
+
+
     data = getSubmissions()
     results = []
     for doc in data:
         results.append(doc)
 
-    return render_template("submissions.html", locations = results, username=username)
+    return render_template("submissions.html", locations = results, username=username, length=len(results))
 
 @app.errorhandler(404)
 def error404(error):
