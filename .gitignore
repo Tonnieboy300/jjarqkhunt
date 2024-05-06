@@ -1,5 +1,7 @@
 /.venv
-/secrets
+/secrets/gmaps
+/secrets/mongoDB
+/secrets/secretkey
 /__pycache__
 
 *.pyc

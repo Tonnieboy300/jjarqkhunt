@@ -1,7 +1,6 @@
-# *JJARQK* Hunt Backend
+# *JJARQK* Hunt
 A database of restaurants in the same price range as fast food.
 Made for the Spring 2023-2024 IDP at the California Academy of Math and Science
-<hr>
 
 ## Installation
 Make sure you have Python 3 installed. <br>
