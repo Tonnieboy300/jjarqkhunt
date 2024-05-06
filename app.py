@@ -133,6 +133,7 @@ def submitPage(title="Submit a Restaurant"):
         name = request.form["name"]
         desc = request.form["desc"]
         addr = request.form["addr"]
+        website = request.form["website"]
         #removes spaces
         tags = request.form["tags"].replace(" ","")
         #turns the tags string into a list
@@ -151,6 +152,7 @@ def submitPage(title="Submit a Restaurant"):
             "name": name,
             "desc": desc,
             "address": addr,
+            "website": website,
             "location": {
                 "type": "Point",
                 "coordinates": [long,lat] #coordinates are in long, lat format
@@ -192,7 +194,11 @@ def login():
 @app.route("/admin", methods=["GET", "POST"])
 def webLogin():
     error = None
-    if session["username"]:
+    try:
+        currentUsername = session["username"]
+    except:
+        currentUsername = None
+    if currentUsername:
         return redirect("/admin/submissions", 302)
     if request.method == "POST":
         attempt = login()
@@ -227,6 +233,7 @@ def webSubmissions():
                 "name": location["name"],
                 "desc": location["desc"],
                 "address": location["address"],
+                "website": location["website"],
                 "location": {
                     "type": "Point",
                     "coordinates": [location["location"]["coordinates"][0],location["location"]["coordinates"][1]] #coordinates are in long, lat format
