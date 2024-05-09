@@ -1,0 +1,82 @@
+* {
+    --space-cadet: #1f2041ff;
+    --english-violet: #4b3f72ff;
+    --sunglow: #ffc857ff;
+    --dark-cyan: #119da4ff;
+    --paynes-gray: #19647eff;
+    --deep-black: #0D0E1Cff;
+}
+
+@font-face {
+    font-family: 'Mona Sans';
+    src:
+      url('/static/fonts/Mona-Sans/Mona-Sans.woff2') format('woff2 supports variations'),
+      url('/static/fonts/Mona-Sans/Mona-Sans.woff2') format('woff2-variations');
+    font-weight: 200 900;
+    font-stretch: 75% 125%;
+  }
+
+body{
+    background-color: var(--deep-black);
+    color: #ffffff;
+    font-family: 'Mona Sans';
+    font-weight: 500;
+    font-stretch:100%;
+}
+
+
+
+#homeSearch{
+    text-align: center;
+    position:absolute;
+    width:90%;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (min-width:900px) {
+    #homeSearch{
+        width:50%;
+    }
+}
+
+#homeSearch .homeSearchBox {
+    width:100%;
+}
+
+#homeSearch div{
+    display:flex;
+    margin-bottom: 0.25rem;
+    width:100%;
+}
+
+label{
+    white-space: nowrap;
+    margin-right:1rem;
+}
+
+input{
+    background-color: var(--space-cadet);
+    color:#ffffff;
+    font-family:'Mona Sans';
+    font-weight: 500;
+    font-stretch:100%;
+    border: none;
+}
+
+#homeSearch input[type=text], #homeSearch input[type=number], #submitForm input[type=text], #submitForm input[type=number]{
+    padding:.25rem;
+    width:100%;
+}
+
+#homeSearch input[type=submit], #submitForm input[type=submit]{
+    padding:.5rem;
+}
+
+
+#submitForm div{
+    display:flex;
+    margin-bottom: 0.25rem;
+    width:90%;
+}

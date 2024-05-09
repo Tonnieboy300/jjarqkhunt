@@ -5,16 +5,26 @@
 <h2>Form Submitted!</h2>
 {% endif %}
 <form method="post" id="submitForm">
-    <label for="name">Name</label>
-    <input name="name" id="name" type="text" value="{{ request.form['name'] }}" required>
-    <label for="desc">Description</label>
-    <input name="desc" id="desc" type="text" value="{{ request.form['desc'] }}" required>
-    <label for="addr">Address</label>
-    <input name="addr" id="addr" type="text" value="{{ request.form['addr'] }}" required>
-    <label for="tags">Tags</label>
-    <input name="tags" id="tags" type="text" value="{{ request.form['tags'] }}" required>
-    <label for="website">Website</label>
-    <input name="website" id="website" type="text" value="{{ request.form['website'] }} " required>
+    <div>
+        <label for="name">Name</label>
+        <input name="name" id="name" type="text" value="{{ request.form['name'] }}" required>
+    </div>
+    <div>
+        <label for="desc">Description</label>
+        <input name="desc" id="desc" type="text" value="{{ request.form['desc'] }}" required>
+    </div>
+    <div>
+        <label for="addr">Address</label>
+        <input name="addr" id="addr" type="text" value="{{ request.form['addr'] }}" required>
+    </div>
+    <div>
+        <label for="tags">Tags</label>
+        <input name="tags" id="tags" type="text" value="{{ request.form['tags'] }}" required>
+    </div>
+    <div>
+        <label for="website">Website</label>
+        <input name="website" id="website" type="text" value="{{ request.form['website'] }} " required>
+    </div>
     <input type="submit" value="Submit">
 </form>
 {% endblock content %}
