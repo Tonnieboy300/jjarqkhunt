@@ -5,6 +5,7 @@ from bson import json_util, ObjectId
 import json
 from werkzeug.security import check_password_hash, generate_password_hash
 import certifi
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
 # tells flask to not auto-sort json. helps when viewing data during testing.
@@ -12,6 +13,14 @@ app.json.sort_keys = False
 app.config.from_mapping(
     SECRET_KEY=open("./secrets/secretkey","r").read()
 )
+
+app.wsgi_app = ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+)
+
+if __name__ == '__main__':
+    app.run()
+
 
 # init database connection
 client = MongoClient(open("./secrets/mongoDB", "r").read(),tlsCAFile=certifi.where())
