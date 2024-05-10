@@ -14,7 +14,7 @@ app = Flask(__name__)
 # tells flask to not auto-sort json. helps when viewing data during testing.
 app.json.sort_keys = False
 app.config.from_mapping(
-    SECRET_KEY=app.open_resource('secrets/secretkey').read()
+    SECRET_KEY=open(os.path.join(root,"secrets/secretkey"),"r").read()
 )
 
 app.wsgi_app = ProxyFix(
@@ -26,14 +26,14 @@ if __name__ == '__main__':
 
 
 # init database connection
-client = MongoClient(app.open_resource('secrets/mongoDB').read(),tlsCAFile=certifi.where())
+client = MongoClient(open(os.path.join(root,"secrets/mongoDB"), "r").read(),tlsCAFile=certifi.where())
 database = client.idp11_data
 restaurants = database.restaurants
 submissions = database.submissions
 auth = database.auth
 
 # init google maps api connection
-maps = googlemaps.Client(key=app.open_resource('secrets/gmaps').read())
+maps = googlemaps.Client(key=open(os.path.join(root,"secrets/gmaps"),"r").read())
 
 # requests for a list of locations near a set of long lat coordinates
 def getSearchResults(lat: float,long: float, minDistance: int, maxDistance: int, tags: list):
