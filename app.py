@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
 
 # init database connection
-client = MongoClient(open(os.path.join(root,"secrets/mongoDB"), "r").read(),tlsCAFile=certifi.where())
+client = MongoClient(open(os.path.join(root,"secrets/mongoDB"), "r").read(),tlsCAFile=certifi.where(),connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
 database = client.idp11_data
 restaurants = database.restaurants
 submissions = database.submissions
