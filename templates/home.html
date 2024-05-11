@@ -1,41 +1,70 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>JJARQK Hunt</title>
-        <script>var tagList = {{availTags|tojson}}</script>
-        <script src="/static/scripts/autocomplete.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key={{gmapsFrontend}}&loading=async&libraries=places&callback=initAutocomplete"> </script>
-    </head>
-    <link rel="stylesheet" href="../static/style.css">
-    <body>
-        <div id="homeSearch">
-            <img src="/static/jjarqkHunt.svg" alt="JJARQK Hunt Logo">
-            <form id="searchForm" autocomplete="off">
-                <div>
-                    <label for="addr">Location*</label>
-                    <input class="homeSearchBox" type="text" name="addr" id="addr" required>
-                </div>
-                <div>
-                    <label for="dist">Range, meters*</label>
-                    <input class="homeSearchBox" type="number" name="dist" id="dist" min="0" placeholder="1000" required>
-                </div>
-                <div>
-                    <label for="tags">Tags seperated by commas</label>
-                    <div id="tagsContainer">
-                        <input class="homeSearchBox" type="text" name="tags" id="tags" placeholder="american, burgers" onkeyup="tagAutocomplete(this.value)">
-                        <div id="tagAuto"></div>
-                    </div>
-                </div>
-                
-                <input type="submit" value="Hunt!">
-            </form>
-        </div>
-        <script>
-            document.getElementById("searchForm").addEventListener("submit", (e) =>{
-                e.preventDefault();
-                window.location.href = "/search?addr=" + encodeURIComponent(document.getElementById("addr").value) + "&dist=" + encodeURIComponent(document.getElementById("dist").value) + "&tags=" + encodeURIComponent(document.getElementById("tags").value);
-            })
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JJARQK Hunt</title>
+    <script>
+      var tagList = {{availTags|tojson}}
     </script>
-    </body>
+    <script src="/static/scripts/autocomplete.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{gmapsFrontend}}&loading=async&libraries=places&callback=initAutocomplete"></script>
+  </head>
+  <link rel="stylesheet" href="../static/style.css" />
+  <body>
+    <div id="homeSearch">
+      <img src="/static/jjarqkHunt.svg" alt="JJARQK Hunt Logo" />
+      <form id="searchForm" autocomplete="off">
+        <div>
+          <label for="addr">Location*</label>
+          <input
+            class="homeSearchBox"
+            type="text"
+            name="addr"
+            id="addr"
+            required
+          />
+        </div>
+        <div>
+          <label for="dist">Range, meters*</label>
+          <input
+            class="homeSearchBox"
+            type="number"
+            name="dist"
+            id="dist"
+            min="0"
+            placeholder="1000"
+            required
+          />
+        </div>
+        <div>
+          <label for="tags">Tags seperated by commas</label>
+          <div id="tagsContainer">
+            <input
+              class="homeSearchBox"
+              type="text"
+              name="tags"
+              id="tags"
+              placeholder="american, burgers"
+              onkeyup="tagAutocomplete(this.value)"
+            />
+            <div id="tagAuto"></div>
+          </div>
+        </div>
+
+        <input type="submit" value="Hunt!" />
+      </form>
+    </div>
+    <script>
+      document.getElementById("searchForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        window.location.href =
+          "/search?addr=" +
+          encodeURIComponent(document.getElementById("addr").value) +
+          "&dist=" +
+          encodeURIComponent(document.getElementById("dist").value) +
+          "&tags=" +
+          encodeURIComponent(document.getElementById("tags").value);
+      });
+    </script>
+  </body>
 </html>

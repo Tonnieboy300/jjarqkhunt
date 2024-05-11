@@ -1,36 +1,68 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <h1>Submit a Restaurant</h1>
 {% if submittedForm %}
 <h2>Form Submitted!</h2>
 {% endif %}
-<script>var tagList = {{availTags|tojson}}</script>
+<script>
+  var tagList = {{availTags|tojson}}
+</script>
 <script src="/static/scripts/autocomplete.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{gmapsFrontend}}&loading=async&libraries=places&callback=initAutocomplete"> </script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{gmapsFrontend}}&loading=async&libraries=places&callback=initAutocomplete"></script>
 <form method="post" id="submitForm" autocomplete="off">
-    <div>
-        <label for="name">Name</label>
-        <input name="name" id="name" type="text" value="{{ request.form['name'] }}" required>
+  <div>
+    <label for="name">Name</label>
+    <input
+      name="name"
+      id="name"
+      type="text"
+      value="{{ request.form['name'] }}"
+      required
+    />
+  </div>
+  <div>
+    <label for="desc">Description</label>
+    <input
+      name="desc"
+      id="desc"
+      type="text"
+      value="{{ request.form['desc'] }}"
+      required
+    />
+  </div>
+  <div>
+    <label for="addr">Address</label>
+    <input
+      name="addr"
+      id="addr"
+      type="text"
+      value="{{ request.form['addr'] }}"
+      required
+    />
+  </div>
+  <div>
+    <label for="tags">Tags</label>
+    <div id="tagsContainer">
+      <input
+        name="tags"
+        id="tags"
+        type="text"
+        value="{{ request.form['tags'] }}"
+        onkeyup="tagAutocomplete(this.value)"
+        required
+      />
+      <div id="tagAuto"></div>
     </div>
-    <div>
-        <label for="desc">Description</label>
-        <input name="desc" id="desc" type="text" value="{{ request.form['desc'] }}" required>
-    </div>
-    <div>
-        <label for="addr">Address</label>
-        <input name="addr" id="addr" type="text" value="{{ request.form['addr'] }}" required>
-    </div>
-    <div>
-        <label for="tags">Tags</label>
-        <div id="tagsContainer">
-            <input name="tags" id="tags" type="text" value="{{ request.form['tags'] }}" onkeyup="tagAutocomplete(this.value)" required>
-            <div id="tagAuto"></div>
-            </div>
-    </div>
-    <div>
-        <label for="website">Website</label>
-        <input name="website" id="website" type="text" value="{{ request.form['website'] }} " required>
-    </div>
-    <input type="submit" value="Submit">
+  </div>
+  <div>
+    <label for="website">Website</label>
+    <input
+      name="website"
+      id="website"
+      type="text"
+      value="{{ request.form['website'] }} "
+      required
+    />
+  </div>
+  <input type="submit" value="Submit" />
 </form>
 {% endblock content %}

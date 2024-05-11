@@ -1,29 +1,40 @@
-# *JJARQK* Hunt
+# _JJARQK_ Hunt
+
 A database of restaurants in the same price range as fast food.
 Made for the Spring 2023-2024 IDP at the California Academy of Math and Science
 
 ## Installation
+
 Make sure you have Python 3 installed. <br>
-Create a terminal in the directory *JJARQK* Hunt is located in. Then, make a virtual environment and activate it.
+Create a terminal in the directory _JJARQK_ Hunt is located in. Then, make a virtual environment and activate it.
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
+
 For Windows:
+
 ```powershell
 py -m venv .venv
 .venv\Scripts\activate
 ```
+
 Now install the required packages.
+
 ```bash
 pip install -r requirements.txt
 ```
+
 Before running, place a <a href="https://mapsplatform.google.com/">Google Maps Platform</a> key (named "gmaps", no file extension), a MongoDB connection string (named "mongoDB", no file extension), and a secret key for flask (named "secretkey", no file extension) in a "secrets" folder in root. <br>
 Now, run the script using:
+
 ```bash
 flask run
 ```
+
 or use debug mode.
+
 ```bash
 flask run --debug
 ```
@@ -39,9 +50,11 @@ Here's an template URL:
 ```
 [ip address or domain name]/data/search?addr=[address or coordinates]&dist=[radius to search, in meters]&tags=[tags]
 ```
+
 Tags are optional, but a 400 error will occur if addr or dist are omitted. <br>
 
 Results are returned in JSON. Here's an example:
+
 ```json
 {
   "resultsFound": 1,
@@ -73,5 +86,3 @@ Results are returned in JSON. Here's an example:
   ]
 }
 ```
-
-

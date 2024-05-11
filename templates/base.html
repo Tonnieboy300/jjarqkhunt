@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% if title %}
     <title>{{ title }} - JJARQK Hunt</title>
     {% else %}
     <title>JJARQK Hunt</title>
     {% endif %}
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/style.css" />
   </head>
   <body>
     <header>
-      <a href="/"><img src="/static/jjarqkHunt.svg" id="headerLogo"></a>
+      <a href="/"><img src="/static/jjarqkHunt.svg" id="headerLogo" /></a>
       <ul>
         <li><a href="/">New Hunt</a></li>
         <li><a href="/submit">Submit a Restaurant</a></li>
       </ul>
     </header>
     {% block content %}{% endblock content %}
-    <footer>
-
-    </footer>
+    <footer></footer>
   </body>
 </html>

@@ -1,18 +1,28 @@
-{% extends "base.html" %}
-
-{% block content%}
+{% extends "base.html" %} {% block content%}
 <h1>Create Account</h1>
 <h2>FOR INTERNAL USE ONLY</h2>
-<p>Send an admin the generated JSON data and they will add it to the database.</p>
+<p>
+  Send an admin the generated JSON data and they will add it to the database.
+</p>
 <p>Don't worry, your password is encrypted.</p>
 <form method="post">
-    <label for="username">Username</label>
-    <input type="text" name="username" value="{{ request.form['username'] }}" required>
+  <label for="username">Username</label>
+  <input
+    type="text"
+    name="username"
+    value="{{ request.form['username'] }}"
+    required
+  />
 
-    <label for="password">Password</label>
-    <input type="password" name="password" value="{{ request.form['password'] }}" required>
+  <label for="password">Password</label>
+  <input
+    type="password"
+    name="password"
+    value="{{ request.form['password'] }}"
+    required
+  />
 
-    <input type="submit" value="Submit">
+  <input type="submit" value="Submit" />
 </form>
 
 {% endblock %}
