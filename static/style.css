@@ -53,6 +53,23 @@ a{
     width:100%;
 }
 
+#tagAuto {
+    background-color: #000000aa;
+    position:absolute;
+}
+
+#tagAuto ul{
+    list-style-type: none;
+    margin: 0;
+    padding: .25rem;
+    text-align: left;
+}
+
+#tagsContainer {
+    display:inline-block !important;
+    position:relative;
+}
+
 label{
     white-space: nowrap;
     margin-right:1rem;

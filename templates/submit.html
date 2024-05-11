@@ -4,7 +4,10 @@
 {% if submittedForm %}
 <h2>Form Submitted!</h2>
 {% endif %}
-<form method="post" id="submitForm">
+<script>var tagList = {{availTags|tojson}}</script>
+<script src="/static/scripts/autocomplete.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{gmapsFrontend}}&loading=async&libraries=places&callback=initAutocomplete"> </script>
+<form method="post" id="submitForm" autocomplete="off">
     <div>
         <label for="name">Name</label>
         <input name="name" id="name" type="text" value="{{ request.form['name'] }}" required>
@@ -19,7 +22,10 @@
     </div>
     <div>
         <label for="tags">Tags</label>
-        <input name="tags" id="tags" type="text" value="{{ request.form['tags'] }}" required>
+        <div id="tagsContainer">
+            <input name="tags" id="tags" type="text" value="{{ request.form['tags'] }}" onkeyup="tagAutocomplete(this.value)" required>
+            <div id="tagAuto"></div>
+            </div>
     </div>
     <div>
         <label for="website">Website</label>

@@ -81,7 +81,7 @@ def resultsToJSON(data):
 
 @app.route('/')
 def index():
-    return render_template("home.html", gmapsFrontend=mapsFrontend)
+    return render_template("home.html", gmapsFrontend=mapsFrontend, availTags=getTags())
 
 # generates search results from url args
 # requires address (addr) and maxDistance (dist)
@@ -110,10 +110,7 @@ def search():
 
     tags = request.args.get("tags")
     if tags:
-        # remove spaces
-        tags = tags.replace(" ","")
-        # splits string into a list seperated by commas
-        tags = tags.split(",")
+        tags = cleanTags(tags)
 
     nearLocationsData = getSearchResults(lat,long,0,maxDistance,tags)
     nearLocations = {"resultsFound":0, "lat": lat, "long": long, "addr":geocode_result[0]["formatted_address"],"maxDist":maxDistance, "tags":tags, "results":[]}
@@ -136,6 +133,18 @@ def appSearchQuery():
 def getTags():
     return restaurants.distinct("tags")
 
+def cleanTags(tags):
+        #removes spaces
+        tags = tags.replace(" ","")
+        #ensure tags are lowercase
+        tags = tags.lower()
+        #turns the tags string into a list
+        tags= tags.split(",")
+        #ensure there are no empty strings
+        #add i to the list for each item i in tags if i is not None
+        tags = [i for i in tags if i]
+        return tags
+
 @app.route('/search')
 def webSearchQuery():
     results = search()
@@ -148,10 +157,9 @@ def submitPage(title="Submit a Restaurant"):
         desc = request.form["desc"]
         addr = request.form["addr"]
         website = request.form["website"]
-        #removes spaces
-        tags = request.form["tags"].replace(" ","")
-        #turns the tags string into a list
-        tags= tags.split(",")
+        tags = request.form["tags"]
+
+        tags = cleanTags(tags)
 
         geocode_result = maps.geocode(addr)
 
@@ -160,7 +168,7 @@ def submitPage(title="Submit a Restaurant"):
         lat = geocode_result[0]["geometry"]["location"]["lat"]
         long = geocode_result[0]["geometry"]["location"]["lng"]
 
-        # app.logger.info(f"Submission recieved from {request.remote_addr}: Name: {name}, Desc: {desc}, Addr: {addr}, Tags: {tags}, Cood: {lat}, {long}")
+        app.logger.info(f"Submission recieved from {request.remote_addr}: Name: {name}, Desc: {desc}, Addr: {addr}, Tags: {tags}, Cood: {lat}, {long}")
 
         submission = {
             "name": name,
@@ -176,10 +184,10 @@ def submitPage(title="Submit a Restaurant"):
 
         submissions.insert_one(submission)
 
-        return render_template("submit.html", title=title, submittedForm = True, gmapsFrontend=mapsFrontend)
+        return render_template("submit.html", title=title, submittedForm = True, gmapsFrontend=mapsFrontend, availTags=getTags())
 
     else:
-        return render_template("submit.html", title=title, submittedForm = False, gmapsFrontend=mapsFrontend)
+        return render_template("submit.html", title=title, submittedForm = False, gmapsFrontend=mapsFrontend, availTags=getTags())
     
 @app.route("/admin/newuser", methods=["GET","POST"])
 def newAccount():
@@ -218,10 +226,11 @@ def webLogin():
         attempt = login()
         if attempt:
             session["username"] = request.form["username"]
+            app.logger.info(f"Successful login attempt for {request.form['username']} at {request.remote_addr}")
             return redirect("/admin/submissions", 302)
         else:
             error = "Username or Password Incorrect."
-        app.logger.info(f"{'Successful' if attempt else 'Failed'} login attempt by {request.form['username']}")
+            app.logger.info(f"Unsuccessful login attempt for {request.form['username']} at {request.remote_addr}")
     return render_template("login.html", title="Login", error=error, gmapsFrontend=mapsFrontend)
 
         
