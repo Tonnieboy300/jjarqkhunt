@@ -8,3 +8,5 @@ In this document, place a <a href="https://mapsplatform.google.com/">Google Maps
 In this document, place a <a href="https://www.mongodb.com/">MongoDB</a> connection string.
 ### secretkey
 In this document, place a random combination of characters. This is used by flask for encryption.
+### gmapsFrontend
+In this document, place a <a href="https://mapsplatform.google.com/">Google Maps Platform</a> api key. You can use the same one as in gmaps.

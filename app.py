@@ -35,6 +35,8 @@ auth = database.auth
 # init google maps api connection
 maps = googlemaps.Client(key=open(os.path.join(root,"secrets/gmaps"),"r").read())
 
+mapsFrontend = open(os.path.join(root,"secrets/gmapsFrontend"),"r").read()
+
 # requests for a list of locations near a set of long lat coordinates
 def getSearchResults(lat: float,long: float, minDistance: int, maxDistance: int, tags: list):
     if tags:
@@ -79,7 +81,7 @@ def resultsToJSON(data):
 
 @app.route('/')
 def index():
-    return render_template("home.html")
+    return render_template("home.html", gmapsFrontend=mapsFrontend)
 
 # generates search results from url args
 # requires address (addr) and maxDistance (dist)
@@ -137,7 +139,7 @@ def getTags():
 @app.route('/search')
 def webSearchQuery():
     results = search()
-    return render_template("locations.html",tags=results["tags"],maxDistance=results["maxDist"],addr=results["addr"],locations=results["results"])
+    return render_template("locations.html",tags=results["tags"],maxDistance=results["maxDist"],addr=request.args.get("addr"),locations=results["results"], gmapsFrontend=mapsFrontend)
 
 @app.route("/submit", methods=["GET", "POST"])
 def submitPage(title="Submit a Restaurant"):
@@ -174,16 +176,16 @@ def submitPage(title="Submit a Restaurant"):
 
         submissions.insert_one(submission)
 
-        return render_template("submit.html", title=title, submittedForm = True)
+        return render_template("submit.html", title=title, submittedForm = True, gmapsFrontend=mapsFrontend)
 
     else:
-        return render_template("submit.html", title=title, submittedForm = False)
+        return render_template("submit.html", title=title, submittedForm = False, gmapsFrontend=mapsFrontend)
     
 @app.route("/admin/newuser", methods=["GET","POST"])
 def newAccount():
     if request.method == "POST":
         return {"username":request.form["username"],"password":generate_password_hash(request.form["password"])}
-    return render_template("createAccount.html",title="Create New User")
+    return render_template("createAccount.html",title="Create New User", gmapsFrontend=mapsFrontend)
 
 def getUser(username:str):
     user = auth.find_one(
@@ -220,7 +222,7 @@ def webLogin():
         else:
             error = "Username or Password Incorrect."
         app.logger.info(f"{'Successful' if attempt else 'Failed'} login attempt by {request.form['username']}")
-    return render_template("login.html", title="Login", error=error)
+    return render_template("login.html", title="Login", error=error, gmapsFrontend=mapsFrontend)
 
         
 
@@ -262,9 +264,9 @@ def webSubmissions():
     for doc in data:
         results.append(doc)
 
-    return render_template("submissions.html", locations = results, username=username, length=len(results))
+    return render_template("submissions.html", locations = results, username=username, length=len(results), gmapsFrontend=mapsFrontend)
 
 @app.errorhandler(404)
 def error404(error):
 
-    return render_template("404.html",title="Page not found")
+    return render_template("404.html",title="Page not found", gmapsFrontend=mapsFrontend)

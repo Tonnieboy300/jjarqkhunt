@@ -2,6 +2,7 @@
 /secrets/gmaps
 /secrets/mongoDB
 /secrets/secretkey
+/secrets/gmapsFrontend
 /__pycache__
 
 *.pyc

@@ -24,7 +24,9 @@ body{
     font-stretch:100%;
 }
 
-
+a{
+    color:#ffffff;
+}
 
 #homeSearch{
     text-align: center;
@@ -41,11 +43,11 @@ body{
     }
 }
 
-#homeSearch .homeSearchBox {
+#homeSearch .homeSearchBox, header .headSearchBox{
     width:100%;
 }
 
-#homeSearch div{
+#homeSearch div, header div{
     display:flex;
     margin-bottom: 0.25rem;
     width:100%;
@@ -79,4 +81,27 @@ input{
     display:flex;
     margin-bottom: 0.25rem;
     width:90%;
+}
+
+#headerLogo {
+    height:5rem;
+}
+
+header {
+    align-items: center;
+    width:100%;
+}
+
+header ul {
+    list-style: none;
+    display:flex;
+    position:absolute;
+    right:1rem;
+    top: 1rem;
+    text-align:right;
+    margin-left:auto;
+}
+
+header li {
+    margin-left:.5rem;
 }

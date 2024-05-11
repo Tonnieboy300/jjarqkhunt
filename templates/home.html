@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <title>JJARQK Hunt</title>
+        <script>
+            let autocomplete;
+
+            function initAutocomplete(){
+                autocomplete = new google.maps.places.Autocomplete(document.getElementById('addr')
+            , ["formatted_address"]);
+            }
+        </script>
+        <script 
+            src="https://maps.googleapis.com/maps/api/js?key={{gmapsFrontend}}&loading=async&libraries=places&callback=initAutocomplete">
+        </script>
+
     </head>
     <link rel="stylesheet" href="../static/style.css">
     <body>
@@ -14,11 +27,11 @@
                 </div>
                 <div>
                     <label for="dist">Range, meters*</label>
-                    <input class="homeSearchBox" type="number" name="dist" id="dist" required>
+                    <input class="homeSearchBox" type="number" name="dist" id="dist" min="0" placeholder="1000" required>
                 </div>
                 <div>
                     <label for="tags">Tags seperated by commas</label>
-                    <input class="homeSearchBox" type="text" name="tags" id="tags">
+                    <input class="homeSearchBox" type="text" name="tags" id="tags" placeholder="american, burgers">
                 </div>
                 <input type="submit" value="Hunt!">
             </form>
