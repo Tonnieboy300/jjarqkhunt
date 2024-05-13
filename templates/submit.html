@@ -16,6 +16,7 @@
       id="name"
       type="text"
       value="{{ request.form['name'] }}"
+      placeholder="The Spire"
       required
     />
   </div>
@@ -26,6 +27,7 @@
       id="desc"
       type="text"
       value="{{ request.form['desc'] }}"
+      placeholder="A modern New American burger joint."
       required
     />
   </div>
@@ -48,6 +50,7 @@
         type="text"
         value="{{ request.form['tags'] }}"
         onkeyup="tagAutocomplete(this.value)"
+        placeholder="american, burgers"
         required
       />
       <div id="tagAuto"></div>
@@ -59,7 +62,8 @@
       name="website"
       id="website"
       type="text"
-      value="{{ request.form['website'] }} "
+      value="{{ request.form['website'] }}"
+      placeholder="https://jjarqk.com"
       required
     />
   </div>
