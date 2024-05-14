@@ -1,7 +1,7 @@
 # _JJARQK_ Hunt
 
 A database of restaurants in the same price range as fast food.
-Made for the Spring 2023-2024 IDP at the California Academy of Math and Science
+Made for the Spring 2023-2024 IDP at the California Academy of Math and Science.
 
 ## Installation
 
@@ -26,7 +26,7 @@ Now install the required packages.
 pip install -r requirements.txt
 ```
 
-Before running, place a <a href="https://mapsplatform.google.com/">Google Maps Platform</a> key (named "gmaps", no file extension), a MongoDB connection string (named "mongoDB", no file extension), and a secret key for flask (named "secretkey", no file extension) in a "secrets" folder in root. <br>
+Before running, place all required secrets into /secrets. Check /secrets/README.md for more info. <br>
 Now, run the script using:
 
 ```bash
@@ -41,19 +41,27 @@ flask run --debug
 
 ## Usage
 
-When the server is running, open the provided ip address and add "/data/search". This path provides a JSON file containing search results from passed URL arguments.
+When the server is running, open the provided ip address.
 
 ### Search
 
-Here's an template URL:
+This opens _JJARQK_ Hunt's web interface, which includes a search function at root. <br>
+
+This page then redirects to /search, which includes URL arguments for each search parameter:
 
 ```
-[ip address or domain name]/data/search?addr=[address or coordinates]&dist=[radius to search, in meters]&tags=[tags]
+[ip address or domain name]/search?addr=[address or coordinates]&dist=[radius to search, in miles]&tags=[tags]
 ```
 
 Tags are optional, but a 400 error will occur if addr or dist are omitted. <br>
 
-Results are returned in JSON. Here's an example:
+For API use, this URL returns JSON.
+
+```
+[ip address or domain name]/data/search?addr=[address or coordinates]&dist=[radius to search, in miles]&tags=[tags]
+```
+
+Here's an example:
 
 ```json
 {
@@ -86,3 +94,8 @@ Results are returned in JSON. Here's an example:
   ]
 }
 ```
+
+In the returned data, `"maxDist"` is in meters, as the Google Maps Platform Geocoding API accepts meters.
+
+### MongoDB
+_JJARQK_ Hunt uses MongoDB to store data. It creates three collections, "restaurants", "submissions", and "auth", within a "idp11_data" database.

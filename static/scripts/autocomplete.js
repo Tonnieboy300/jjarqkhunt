@@ -28,6 +28,10 @@ function cleanString(value) {
 }
 
 function tagAutocomplete(value) {
+  tagBox = document.getElementById("tags");
+  //force value to be lowercase
+  value = value.toLowerCase();
+  tagBox.value = value;
   value = cleanString(value);
   //only get the last value
   value = value[value.length - 1];

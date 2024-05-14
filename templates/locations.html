@@ -1,9 +1,9 @@
 {% extends "base.html" %} {% block content%}
 <h1>Hunt Results</h1>
 {% if tags %}
-<h2>Locations with tags {{ tags }} within {{ maxDistance}}m of {{addr}}.</h2>
+<h2>Locations with tags {{ tags }} within {{ maxDistance}} mi of {{addr}}.</h2>
 {% else %}
-<h2>Locations within {{ maxDistance}}m of {{addr}}.</h2>
+<h2>Locations within {{ maxDistance}} mi of {{addr}}.</h2>
 {% endif %} {% for location in locations %}
 <h3>{{ location.name }}</h3>
 <p>{{ location.desc }}</p>

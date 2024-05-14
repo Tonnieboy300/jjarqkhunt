@@ -7,6 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import certifi
 from werkzeug.middleware.proxy_fix import ProxyFix
 import os
+import validators
 
 root = os.path.dirname(__file__)
 
@@ -97,7 +98,7 @@ def index():
 # optionally searches tags (tags)
 def search():
     try:
-        maxDistance = int(request.args.get("dist"))
+        maxDistance = float(request.args.get("dist"))
     except:
         maxDistance = None
 
@@ -105,24 +106,47 @@ def search():
 
     if (not address) or (not maxDistance):
         app.logger.error(
-            f"Request failed from {request.remote_addr}: Error 400, Missing args, Addr {address}, maxDist {maxDistance}"
+            f'Request failed from {request.remote_addr}: Error 400, Missing args, Addr "{address}", maxDist "{maxDistance}"'
         )
         abort(400)
 
-    geocode_result = maps.geocode(address)
-
-    try:
-        lat = geocode_result[0]["geometry"]["location"]["lat"]
-        long = geocode_result[0]["geometry"]["location"]["lng"]
-    except IndexError:
-        app.logger.error(
-            f"Request failed from {request.remote_addr}: Could not find coordinates for address {address}"
-        )
-        return [{"resultsFound": 0, "lat": "error", "long": "error"}]
+    maxDistance = milesToMeters(maxDistance)
 
     tags = request.args.get("tags")
     if tags:
         tags = cleanTags(tags)
+
+    try:
+        geocode_result = maps.geocode(address)
+    except:
+        app.logger.error(
+            f"Request failed from {request.remote_addr}: Geocoding API Error with address input {address}"
+        )
+        return [
+            {
+                "resultsFound": 0,
+                "lat": None,
+                "long": None,
+                "addr": None,
+                "maxDist": maxDistance,
+                "tags": tags,
+                "results": [],
+            }
+        ]
+
+    if not len(geocode_result):
+        return {
+            "resultsFound": 0,
+            "lat": None,
+            "long": None,
+            "addr": None,
+            "maxDist": maxDistance,
+            "tags": tags,
+            "results": [],
+        }
+
+    lat = geocode_result[0]["geometry"]["location"]["lat"]
+    long = geocode_result[0]["geometry"]["location"]["lng"]
 
     nearLocationsData = getSearchResults(lat, long, 0, maxDistance, tags)
     nearLocations = {
@@ -140,7 +164,9 @@ def search():
 
     nearLocations["resultsFound"] = len(nearLocations["results"])
 
-    # app.logger.info(f"Request successful from {request.remote_addr}: Lat {lat}, Long {long}, Tags {tags}")
+    app.logger.info(
+        f"Request successful from {request.remote_addr}: Lat {lat}, Long {long}, Tags {tags}, Address {nearLocations['addr']}"
+    )
     return nearLocations
 
 
@@ -175,7 +201,7 @@ def webSearchQuery():
     return render_template(
         "locations.html",
         tags=results["tags"],
-        maxDistance=results["maxDist"],
+        maxDistance=request.args.get("dist"),
         addr=request.args.get("addr"),
         locations=results["results"],
         gmapsFrontend=mapsFrontend,
@@ -193,7 +219,40 @@ def submitPage(title="Submit a Restaurant"):
 
         tags = cleanTags(tags)
 
-        geocode_result = maps.geocode(addr)
+        if not validators.url(website):
+            return render_template(
+                "submit.html",
+                title=title,
+                submittedForm=False,
+                gmapsFrontend=mapsFrontend,
+                availTags=getTags(),
+                error="Submit a valid URL.",
+            )
+        try:
+            geocode_result = maps.geocode(addr)
+        except:
+            app.logger.warning(
+                f"Submission failed from {request.remote_addr}: Geocoding API error with input {addr}"
+            )
+            return render_template(
+                "submit.html",
+                title=title,
+                submittedForm=False,
+                gmapsFrontend=mapsFrontend,
+                availTags=getTags(),
+                error="There was an error processing your location.",
+            )
+
+        if not len(geocode_result):
+            app.logger.info(geocode_result)
+            return render_template(
+                "submit.html",
+                title=title,
+                submittedForm=False,
+                gmapsFrontend=mapsFrontend,
+                availTags=getTags(),
+                error="Submit a valid location.",
+            )
 
         addr = geocode_result[0]["formatted_address"]
 
@@ -307,7 +366,7 @@ def webSubmissions():
             location = submissions.find_one({"_id": ObjectId(decision["locationId"])})
         except:
             app.logger.error(
-                f"User {username} sent a POST with a non-existant ObjectId"
+                f'User "{username}" sent a POST with a non-existant ObjectId'
             )
             abort(400)
         app.logger.info(
@@ -346,9 +405,24 @@ def webSubmissions():
     )
 
 
+@app.route("/about")
+def about():
+    return render_template("about.html", title="About JJARQK")
+
+
+def milesToMeters(miles):
+    return miles * 1609
+
+
 @app.errorhandler(404)
 def error404(error):
 
     return render_template(
         "404.html", title="Page not found", gmapsFrontend=mapsFrontend
     )
+
+
+@app.errorhandler(400)
+def error400(error):
+
+    return render_template("400.html", title="Bad Request", gmapsFrontend=mapsFrontend)

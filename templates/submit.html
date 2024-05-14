@@ -3,6 +3,9 @@
 {% if submittedForm %}
 <h2>Form Submitted!</h2>
 {% endif %}
+{% if error %}
+<h2>{{error}}</h2>
+{% endif %}
 <script>
   var tagList = {{availTags|tojson}}
 </script>
