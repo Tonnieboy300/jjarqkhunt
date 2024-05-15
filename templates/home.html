@@ -21,6 +21,7 @@
   </head>
   <link rel="stylesheet" href="/static/style.css" />
   <body>
+    <div id="content">
     <div id="homeSearch">
       <img src="/static/jjarqkHunt.svg" alt="JJARQK Hunt Logo" />
       <form id="searchForm" autocomplete="off">
@@ -64,6 +65,19 @@
         <input type="submit" value="Hunt!" />
       </form>
     </div>
+    </div>
+    <footer>
+      <div id="credits">
+        <span>Made with ❤️ by </span><img src="/static/jjarqk.svg" id="footerLogo" alt="JJARQK Technologies">
+      </div>
+      <div id="footerLinks">
+        <ul>
+          <li><a href="/">New Hunt</a></li>
+          <li><a href="/submit">Submit a Restaurant</a></li>
+          <li><a href="/about">About JJARQK</a></li>
+        </ul>
+      </div>
+    </footer>
     <script>
       document.getElementById("searchForm").addEventListener("submit", (e) => {
         e.preventDefault();

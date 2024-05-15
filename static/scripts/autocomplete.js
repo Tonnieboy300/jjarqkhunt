@@ -31,7 +31,7 @@ function tagAutocomplete(value) {
   tagBox = document.getElementById("tags");
   //force value to be lowercase
   value = value.toLowerCase();
-  tagBox.value = value;
+  tagBox.value = tagBox.value.toLowerCase();
   value = cleanString(value);
   //only get the last value
   value = value[value.length - 1];
