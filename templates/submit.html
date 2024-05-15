@@ -18,7 +18,11 @@
       name="name"
       id="name"
       type="text"
+      {% if submittedForm %}
+      value=""
+      {% else %}
       value="{{ request.form['name'] }}"
+      {% endif %}
       placeholder="The Spire"
       required
     />
@@ -29,7 +33,11 @@
       name="desc"
       id="desc"
       type="text"
+      {% if submittedForm %}
+      value=""
+      {% else %}
       value="{{ request.form['desc'] }}"
+      {% endif %}
       placeholder="A modern New American burger joint."
       required
     />
@@ -40,7 +48,11 @@
       name="addr"
       id="addr"
       type="text"
+      {% if submittedForm %}
+      value=""
+      {% else %}
       value="{{ request.form['addr'] }}"
+      {% endif %}
       placeholder="1000 E. Victoria Street, Carson, CA 90747"
       required
     />
@@ -52,7 +64,11 @@
         name="tags"
         id="tags"
         type="text"
+        {% if submittedForm %}
+        value=""
+        {% else %}
         value="{{ request.form['tags'] }}"
+        {% endif %}
         onkeyup="tagAutocomplete(this.value)"
         placeholder="american, burgers, feel free to add your own."
         required
@@ -66,7 +82,11 @@
       name="website"
       id="website"
       type="text"
+      {% if submittedForm %}
+      value=""
+      {% else %}
       value="{{ request.form['website'] }}"
+      {% endif %}
       placeholder="https://jjarqk.com"
       required
     />
