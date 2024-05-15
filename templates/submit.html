@@ -29,7 +29,7 @@
       name="desc"
       id="desc"
       type="text"
-      value="{{ request.form['desc'] }}"
+      value=""
       placeholder="A modern New American burger joint."
       required
     />
@@ -41,6 +41,7 @@
       id="addr"
       type="text"
       value="{{ request.form['addr'] }}"
+      placeholder="1000 E. Victoria Street, Carson, CA 90747"
       required
     />
   </div>
@@ -53,7 +54,7 @@
         type="text"
         value="{{ request.form['tags'] }}"
         onkeyup="tagAutocomplete(this.value)"
-        placeholder="american, burgers"
+        placeholder="american, burgers, feel free to add your own."
         required
       />
       <div id="tagAuto"></div>
