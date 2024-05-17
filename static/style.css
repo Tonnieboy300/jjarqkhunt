@@ -5,6 +5,14 @@
     --dark-cyan: #119da4ff;
     --paynes-gray: #19647eff;
     --deep-black: #0D0E1Cff;
+
+    --paynes-gray: #31627bff;
+    --powder-blue: #a1c6eaff;
+    --asparagus: #69995dff;
+    --tan: #cbac88ff;
+    --lavender-blush: #f8e9e9ff;
+    --warm-white: #F9F5F1ff;
+    --light-tan:#E0CCB8ff;
 }
 
 @font-face {
@@ -16,9 +24,19 @@
     font-stretch: 75% 125%;
 }
 
+@font-face {
+    font-family: 'Noto Serif';
+    src:
+        url('/static/fonts/Noto-Serif/NotoSerif-Variable.ttf');
+}
+
+html {
+    border-top: .5rem solid var(--paynes-gray);
+}
+
 body {
-    background-color: var(--deep-black);
-    color: #ffffff;
+    background-color: var(--warm-white);
+    color: var(--deep-black);
     font-family: 'Mona Sans';
     font-weight: 500;
     font-stretch: 100%;
@@ -30,6 +48,10 @@ body {
     margin-top: 0;
 }
 
+h1 {
+    font-family:'Noto Serif'
+}
+
 header {
     margin-top: 8px;
 }
@@ -39,7 +61,7 @@ header {
 }
 
 a {
-    color: #ffffff;
+    color: var(--deep-black);
 }
 
 #homeSearch {
@@ -50,6 +72,11 @@ a {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+#searchForm{
+    padding-top:.5rem;
+}
+
 
 #homeSearch img {
     max-width:100%;
@@ -72,6 +99,11 @@ header div {
     margin-bottom: 0.25rem;
     width: 100%;
 }
+
+header a {
+    font-family: 'Noto Serif';
+}
+
 
 #tagAuto {
     background-color: #000000aa;
@@ -96,12 +128,12 @@ label {
 }
 
 input {
-    background-color: var(--space-cadet);
-    color: #ffffff;
+    background-color: #00000000;
+    border: .15rem solid var(--paynes-gray);
+    color: var(--deep-black);
     font-family: 'Mona Sans';
     font-weight: 500;
     font-stretch: 100%;
-    border: none;
 }
 
 #homeSearch input[type=text],
@@ -115,6 +147,9 @@ input {
 #homeSearch input[type=submit],
 #submitForm input[type=submit] {
     padding: .5rem;
+    background-color: var(--paynes-gray);
+    border:none;
+    color: var(--warm-white);
 }
 
 
@@ -168,10 +203,11 @@ header li {
 
 footer {
     text-align: center;
-    background-color: var(--space-cadet);
+    background-color: var(--light-tan);
     width:100vw;
     margin-left:-8px;
     padding-top:0.5rem;
+    border-top: .5rem solid var(--paynes-gray);
 }
 
 #footerLinks ul{
@@ -188,4 +224,35 @@ footer {
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.tagCard {
+    margin-right:.5rem;
+    padding: .25rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    background-color: var(--paynes-gray);
+    color:var(--warm-white);
+    border-radius: .85rem;
+    font-size: 1rem;
+    display: inline-block;
+}
+
+.restaurant {
+    margin-left:-8px;
+    width:100vw;
+    padding-left:8px;
+    padding-bottom:1rem;
+    padding-top:1rem;
+}
+
+.restaurant h3 {
+    margin-top:0;
+    margin-bottom:.5rem;
+    font-family:'Noto Serif';
+    font-size:1.5rem;
+}
+
+.dark {
+    background-color: var(--light-tan);
 }
