@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="/static/icons/favicon.ico">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="/static/icons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#19647e">
     <title>JJARQK Hunt</title>
     <script>
       var tagList = {{availTags|tojson}}
@@ -33,9 +33,10 @@
             type="text"
             name="addr"
             id="addr"
-            placeholder="Enter a Location. Address, City, Coordinates, etc."
+            placeholder="Address, Coordinates, etc."
             required
           />
+          <button id="getLocationButton" type="button" onClick="getLocation()">Current Location</button>
         </div>
         <div>
           <label for="dist">Range, miles*</label>
@@ -91,6 +92,14 @@
           "&tags=" +
           encodeURIComponent(document.getElementById("tags").value);
       });
+
+       locationBox = document.getElementById("addr")
+
+      function getLocation(){
+        navigator.geolocation.getCurrentPosition((position) => {
+          locationBox.value = position.coords.latitude.toString() + " ," + position.coords.longitude.toString()
+        });
+      }
     </script>
   </body>
 </html>

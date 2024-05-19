@@ -144,12 +144,17 @@ input {
     width: 100%;
 }
 
-#homeSearch input[type=submit],
-#submitForm input[type=submit] {
+input[type=submit],
+button{
     padding: .5rem;
     background-color: var(--paynes-gray);
     border:none;
     color: var(--warm-white);
+    font-family: 'Mona Sans';
+}
+
+#homeSearch button {
+    margin-left:.5rem;
 }
 
 
@@ -255,4 +260,9 @@ footer {
 
 .dark {
     background-color: var(--light-tan);
+}
+
+#getLocationButton {
+    white-space: nowrap;
+    text-align: center; 
 }
