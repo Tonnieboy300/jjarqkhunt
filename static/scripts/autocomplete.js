@@ -40,7 +40,13 @@ function tagAutocomplete(value) {
   completeBox.innerHTML = "";
   let results = "";
   let tags = matchTags(value);
-  for (i = 0; i < tags.length; i++) {
+  let returnAmount = 0
+  if (tags.length > 10){
+    returnAmount = 10;
+  } else {
+    returnAmount = tags.length;
+  }
+  for (i = 0; i < returnAmount; i++) {
     results +=
       "<li onclick=\"autofillTag('" + tags[i] + "')\">" + tags[i] + "</li>";
   }
