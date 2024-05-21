@@ -35,7 +35,6 @@ function tagAutocomplete(value) {
   value = cleanString(value);
   //only get the last value
   value = value[value.length - 1];
-  console.log(value);
   completeBox = document.getElementById("tagAuto");
   completeBox.innerHTML = "";
   let results = "";

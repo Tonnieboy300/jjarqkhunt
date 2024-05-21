@@ -409,6 +409,10 @@ def webSubmissions():
 def about():
     return render_template("about.html", title="About JJARQK")
 
+@app.route("/legal")
+def legal():
+    return render_template("legal.html", title="Legal")
+
 
 def milesToMeters(miles):
     return miles * 1609
