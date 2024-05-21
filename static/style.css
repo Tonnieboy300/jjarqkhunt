@@ -71,6 +71,8 @@ a {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-color: var(--warm-white);
+    padding:1rem;
 }
 
 #searchForm{
@@ -107,14 +109,29 @@ header a {
 
 #tagAuto {
     background-color: #000000aa;
+    color:var(--warm-white);
     position: absolute;
+    margin:0;
 }
 
 #tagAuto ul {
     list-style-type: none;
     margin: 0;
-    padding: .25rem;
+    padding:0;
     text-align: left;
+    width:100%;
+}
+
+#tagAuto li {
+    width:100%;
+    cursor:pointer;
+    padding-left:.25rem;
+    box-sizing: border-box;
+    transition:0.2s;
+}
+
+#tagAuto li:hover {
+    background-color: #000000bb;
 }
 
 #tagsContainer {
@@ -142,6 +159,7 @@ input {
 #submitForm input[type=number] {
     padding: .25rem;
     width: 100%;
+    box-sizing: border-box;
 }
 
 input[type=submit],
@@ -151,6 +169,14 @@ button{
     border:none;
     color: var(--warm-white);
     font-family: 'Mona Sans';
+    cursor:pointer;
+    transition:0.3s;
+    border-radius: 0;
+}
+
+input[type=submit]:hover,
+button:hover{
+    background-color: var(--dark-cyan);
 }
 
 #homeSearch button {
@@ -265,4 +291,8 @@ footer {
 #getLocationButton {
     white-space: nowrap;
     text-align: center; 
+}
+
+#tagsContainer {
+    width:100% !important;
 }
