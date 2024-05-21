@@ -73,6 +73,7 @@ a {
     transform: translate(-50%, -50%);
     background-color: var(--warm-white);
     padding:1rem;
+    border:solid .5rem var(--paynes-gray);
 }
 
 #searchForm{

@@ -3,6 +3,7 @@
 /secrets/mongoDB
 /secrets/secretkey
 /secrets/gmapsFrontend
+/secrets/unsplash
 /__pycache__
 
 *.pyc
