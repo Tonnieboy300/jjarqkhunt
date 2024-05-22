@@ -6,6 +6,8 @@
 /secrets/unsplash
 /__pycache__
 
+/pyscripts/bgimage.json
+
 *.pyc
 
 *.ds_store
