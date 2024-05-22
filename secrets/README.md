@@ -10,3 +10,5 @@ In this document, place a <a href="https://www.mongodb.com/">MongoDB</a> connect
 In this document, place a random combination of characters. This is used by flask for encryption.
 ### gmapsFrontend
 In this document, place a <a href="https://mapsplatform.google.com/">Google Maps Platform</a> api key. You can use the same one as in gmaps.
+### unsplash
+In this document, place a <a href="https://unsplash.com/developers">Unsplash</a> api key.
