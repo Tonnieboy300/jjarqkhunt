@@ -89,13 +89,14 @@ Here's an example:
         "american",
         "burgers"
       ],
-      "desc": "A modern New American burger joint. Has a cool metal pole"
+      "desc": "A modern New American burger joint. Has a cool metal pole",
+      "website": "https://jjarqk.com"
     }
   ]
 }
 ```
 
-In the returned data, `"maxDist"` is in meters, as the Google Maps Platform Geocoding API accepts meters.
+In the returned data, `"maxDist"` is in meters, as MongoDB accepts meters when searching by location.
 
 ### MongoDB
 _JJARQK_ Hunt uses MongoDB to store data. It creates three collections, "restaurants", "submissions", and "auth", within a "idp11_data" database.
