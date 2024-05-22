@@ -90,7 +90,8 @@ def resultsToJSON(data):
 
 @app.route("/")
 def index():
-    return render_template("home.html", gmapsFrontend=mapsFrontend, availTags=getTags())
+    unsplash = json.loads(open(os.path.join(root, "pyscripts/bgimage.json"), "r").read())
+    return render_template("home.html", gmapsFrontend=mapsFrontend, availTags=getTags(), bgImage=unsplash)
 
 
 # generates search results from url args

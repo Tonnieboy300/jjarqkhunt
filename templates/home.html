@@ -20,7 +20,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key={{gmapsFrontend}}&loading=async&libraries=places&callback=initAutocomplete"></script>
   </head>
   <link rel="stylesheet" href="/static/style.css" />
-  <body>
+  <body style="background-image:url({{bgImage['urls']['full']}});background-size:cover">
     <div id="content">
     <div id="homeSearch">
       <img src="/static/jjarqkHunt.svg" alt="JJARQK Hunt Logo" /> <br>
@@ -67,6 +67,9 @@
 
         <input type="submit" value="Hunt!" />
       </form>
+    </div>
+    <div id="imageCredits">
+    <p><a href="{{bgImage['user']['links']['html']}}">{{bgImage['user']['name']}}</a> / <a href="https://unsplash.com/">Unsplash</a></p>
     </div>
     </div>
     <footer>

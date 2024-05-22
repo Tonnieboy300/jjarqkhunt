@@ -58,6 +58,7 @@ header {
 
 #content {
     flex:1;
+    position:relative;
 }
 
 a {
@@ -296,4 +297,18 @@ footer {
 
 #tagsContainer {
     width:100% !important;
+}
+
+#imageCredits p{
+    display:inline-block;
+    margin:0;
+}
+
+#imageCredits {
+    width:fit-content;
+    background-color: var(--warm-white);
+    padding:.25rem;
+    position:absolute;
+    right:-8px;
+    bottom:0;
 }
