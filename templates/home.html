@@ -22,14 +22,14 @@
   <link rel="stylesheet" href="/static/style.css" />
   <body style="background-image:url({{bgImage['urls']['full']}});">
     <div id="content">
-    <div id="homeSearch">
+    <div id="homeSearch" {% if not textColor %}class="lightText"{% endif %}>
       <img src="/static/jjarqkHunt.svg" alt="JJARQK Hunt Logo" /> <br>
       <span>Hunt Healthier. Hunt Happier.</span>
       <form id="searchForm" autocomplete="off">
         <div>
           <label for="addr">Location*</label>
           <input
-            class="homeSearchBox"
+            class="homeSearchBox {% if not textColor %}lightText{% endif %}"
             type="text"
             name="addr"
             id="addr"
@@ -41,7 +41,7 @@
         <div>
           <label for="dist">Range, miles*</label>
           <input
-            class="homeSearchBox"
+            class="homeSearchBox {% if not textColor %}lightText{% endif %}"
             type="number"
             name="dist"
             id="dist"
@@ -54,7 +54,7 @@
           <label for="tags">Tags seperated by commas</label>
           <div id="tagsContainer">
             <input
-              class="homeSearchBox"
+              class="homeSearchBox {% if not textColor %}lightText{% endif %}"
               type="text"
               name="tags"
               id="tags"

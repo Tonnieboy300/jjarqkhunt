@@ -8,6 +8,7 @@ import certifi
 from werkzeug.middleware.proxy_fix import ProxyFix
 import os
 import validators
+import colorsys
 
 root = os.path.dirname(__file__)
 
@@ -87,11 +88,33 @@ def getSubmissions():
 def resultsToJSON(data):
     return json.loads(json_util.dumps(data))
 
+# determines if a color is bright or dark
+# used for the home page
+def darkText(value):
+    value = value.lstrip('#')
+    rgb = []
+    if len(value) < 6:
+        app.logger.error("hexToHsl error: hex code shorter than 6 characters")
+    # split hex code into 3 values: r, g, b
+    for char in range(len(value)):
+        if char % 2 == 0:
+            rgb.append(value[char])
+        else:
+            rgb[len(rgb)-1] = rgb[len(rgb)-1] + value[char]
+    # convert values to decimal
+    for val in range(len(rgb)):
+        rgb[val] = (int(rgb[val], 16))/255
+    lum = 0.2126*rgb[0] + 0.7152*rgb[1] + 0.0722*rgb[2]
+    return lum > 0.5
+
 
 @app.route("/")
 def index():
     unsplash = json.loads(open(os.path.join(root, "pyscripts/bgimage.json"), "r").read())
-    return render_template("home.html", gmapsFrontend=mapsFrontend, availTags=getTags(), bgImage=unsplash)
+
+    textColor = darkText(unsplash["color"])
+
+    return render_template("home.html", gmapsFrontend=mapsFrontend, availTags=getTags(), bgImage=unsplash,textColor=textColor)
 
 
 # generates search results from url args

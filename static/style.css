@@ -74,9 +74,9 @@ a {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--warm-white);
     padding:1rem;
-    border:solid .5rem var(--paynes-gray);
+    border-radius: .5rem;
+    backdrop-filter: blur(50px);
 }
 
 #searchForm{
@@ -116,6 +116,7 @@ header a {
     color:var(--warm-white);
     position: absolute;
     margin:0;
+    border-radius: .2rem;
 }
 
 #tagAuto ul {
@@ -175,12 +176,15 @@ button{
     font-family: 'Mona Sans';
     cursor:pointer;
     transition:0.3s;
-    border-radius: 0;
 }
 
 input[type=submit]:hover,
 button:hover{
     background-color: var(--dark-cyan);
+}
+
+input, button{
+    border-radius:.2rem;
 }
 
 #homeSearch button {
@@ -313,4 +317,8 @@ footer {
     position:absolute;
     right:-8px;
     bottom:0;
+}
+
+.lightText{
+    color:var(--warm-white);
 }
