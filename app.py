@@ -435,3 +435,8 @@ def error404(error):
 def error400(error):
 
     return render_template("400.html", title="Bad Request", gmapsFrontend=mapsFrontend)
+
+@app.errorhandler(500)
+def error500(error):
+
+    return render_template('500.html', title='Internal Server Error', gmapsFrontend=mapsFrontend)
