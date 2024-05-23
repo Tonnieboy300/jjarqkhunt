@@ -168,6 +168,15 @@ input {
     box-sizing: border-box;
 }
 
+#homeSearch input::placeholder{
+    color: var(--deep-black);
+    opacity: .7;
+}
+
+.lightText::placeholder{
+    color: var(--warm-white) !important;
+}
+
 input[type=submit],
 button{
     padding: .5rem;
