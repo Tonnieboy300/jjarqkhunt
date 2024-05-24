@@ -322,7 +322,7 @@ footer {
 
 #imageCredits {
     width:fit-content;
-    background-color: var(--warm-white);
+    background-color: var(--light-tan);
     padding:.25rem;
     position:absolute;
     right:-8px;
