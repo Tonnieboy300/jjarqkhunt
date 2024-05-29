@@ -10,7 +10,7 @@
     <h3>{{ location.name }}</h3>
     <p>{{ location.desc }}</p>
     <p>{{ location.address }}</p>
-    <p><a href="{{ location.website }}">Website</a></p>
+    <p class="websiteLink"><a href="{{ location.website }}">Website</a></p>
     {% for tag in location.tags %}<span class="tagCard">{{ tag }}</span>{% endfor %}
 </div>
 {% endfor %} {% endblock content%}
